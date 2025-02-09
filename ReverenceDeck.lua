@@ -9,6 +9,14 @@
 ------------MOD CODE -------------------------
 
 SMODS.Atlas{
+    key = "sleeves",
+    px = 73,
+    py = 95,
+    path = "sleeves.png"
+}
+
+
+SMODS.Atlas{
     key = "reverence",
     px = 71,
     py = 95,
@@ -32,6 +40,22 @@ SMODS.Back{
         G.GAME.modifiers.poke_force_seal = "poke_silver"
     end,
 }
+
+if CardSleeves then
+
+    CardSleeves.Sleeve {
+        name = "reverencesleeve",
+        key = "reverencesleeve",
+        atlas = "sleeves",
+        pos = { x = 0, y = 0 },
+        config = {},
+        unlocked = true,
+
+        apply = function(self)
+            G.GAME.modifiers.poke_force_seal = "poke_silver"
+        end,
+    }
+end
 
 
 ----------------------------------------------
