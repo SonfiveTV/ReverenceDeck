@@ -41,6 +41,8 @@ SMODS.Back{
     end,
 }
 
+
+
 if CardSleeves then
 
     CardSleeves.Sleeve {
@@ -50,9 +52,38 @@ if CardSleeves then
         pos = { x = 0, y = 0 },
         config = {},
         unlocked = true,
+        local_vars = function(self)
+            local key, vars
 
+            if self.get_current_deck_key() ~= "b_reve_reverence" then
+                key = "reverencecsleeve"
+                if self.get_current_deck_key() == "b_poke_obituarydeck" then
+                    key = self.key.."reverencecsleeve_obit"
+                end
+            else
+                key = self.key.."reverencecsleeve_alt"
+            end
+
+            return { key = key, vars = vars }
+        end,
         apply = function(self)
-            G.GAME.modifiers.poke_force_seal = "poke_silver"
+            if self.get_current_deck_key() ~= "b_reve_reverence" then            
+                if self.get_current_deck_key() == "b_poke_obituarydeck" then
+--                                                                               insert logic to apply seals to only half the deck here
+
+                    G.E_MANAGER:add_event(Event({func = function()
+                        G.consumeables.config.card_limit = G.consumeables.config.card_limit + 5
+                        return true 
+                    end }))
+                else
+                    G.GAME.modifiers.poke_force_seal = "poke_silver" 
+                end
+            else
+                G.E_MANAGER:add_event(Event({func = function()
+                    G.consumeables.config.card_limit = G.consumeables.config.card_limit + 1
+                    return true end }))
+                
+            end
         end,
     }
 end
